@@ -21,7 +21,45 @@ namespace ExpenseTrackerApp
             }
 
             // TODO: Override ToString() method to display expense details in a readable format
+            
+        }
 
+        public static void PrintExpensesInList(List<Expense> expensesList) 
+        {
+            if (expensesList.Count > 0)
+            {
+                for (int i = 0; i < expensesList.Count; i++)
+                {
+                    Console.WriteLine($"{expensesList[i].Description}");
+                    Console.WriteLine($"Amount: {expensesList[i].Amount:C}");
+                    Console.WriteLine($"Category: {expensesList[i].Category}");
+                    Console.WriteLine("");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No expenses have been added yet");
+            }
+            Console.WriteLine("");
+        }
+
+        public static int GetIntInput(string input)
+        {
+            int resultInt;
+            while (true)
+            {
+                if (int.TryParse(input, out resultInt))
+                {
+                    Console.WriteLine($"Good Input. You entered: {resultInt}");
+                    break;
+                }
+                else
+                {
+                    // If the user typed "abc", this code runs instead of crashing
+                    Console.WriteLine("Invalid input. Please enter a whole number.");
+                }
+            }
+            return resultInt;
         }
 
 
@@ -37,9 +75,21 @@ namespace ExpenseTrackerApp
                 Console.WriteLine("5. Exit");
                 Console.WriteLine("");
 
-                Console.WriteLine("Select an option: ");
 
-                int userInput = Convert.ToInt32(Console.ReadLine()); // Gets the user input and converts it to an integer
+                int userInput;
+                while (true)
+                {
+                    Console.WriteLine("Select an option: ");
+                    string input = Console.ReadLine() ?? "";
+
+                    if (int.TryParse(input, out userInput))
+                    {
+                        break; // Exit the loop because we have a valid number
+                    }
+
+                    Console.WriteLine($"\"{input}\" is not a number. Please reinput selection");
+                    Console.WriteLine("");
+                }
                 Console.WriteLine("");
 
                 switch (userInput)
@@ -71,27 +121,17 @@ namespace ExpenseTrackerApp
 
                     // View all expenses
                     case 2:
-                        if(expensesList.Count > 0)
-                        {
-                            for (int i = 0; i < expensesList.Count; i++)
-                            {
-                                Console.WriteLine($"{expensesList[i].Description}");
-                                Console.WriteLine($"Amount: {expensesList[i].Amount:C}");
-                                Console.WriteLine($"Category: {expensesList[i].Category}");
-                                Console.WriteLine("");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("No expenses have been added yet");
-                        }
-                        Console.WriteLine("");
+                        PrintExpensesInList(expensesList);
                         break;
 
                     // View expense by category
                     case 3:
+                        Console.WriteLine("What category would you like to view?");
+                        string categoryInput = Console.ReadLine() ?? "";
 
+                        List<Expense> categoryList = expensesList.Where(e => e.Category == categoryInput).ToList(); // Make a new list to hold the returned expenses
 
+                        PrintExpensesInList(categoryList); // Prints the expenses that were returned based on the category
 
                         break;
                     case 4:
