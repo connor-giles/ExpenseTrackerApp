@@ -9,9 +9,11 @@ namespace ExpenseTrackerApp
             {
                 for (int i = 0; i < expensesList.Count; i++)
                 {
-                    Console.WriteLine($"{expensesList[i].Description}");
+                    Console.WriteLine("-------------------------------");
+                    Console.WriteLine($"Name: {expensesList[i].Description}");
                     Console.WriteLine($"Amount: {expensesList[i].Amount:C}");
                     Console.WriteLine($"Category: {expensesList[i].Category}");
+                    Console.WriteLine("-------------------------------");
                     Console.WriteLine("");
                 }
             }
@@ -21,26 +23,6 @@ namespace ExpenseTrackerApp
             }
             Console.WriteLine("");
         }
-
-        public static int GetIntInput(string input)
-        {
-            int resultInt;
-            while (true)
-            {
-                if (int.TryParse(input, out resultInt))
-                {
-                    Console.WriteLine($"Good Input. You entered: {resultInt}");
-                    break;
-                }
-                else
-                {
-                    // If the user typed "abc", this code runs instead of crashing
-                    Console.WriteLine("Invalid input. Please enter a whole number.");
-                }
-            }
-            return resultInt;
-        }
-
 
         static void Main(string[] args)
         {
@@ -90,16 +72,19 @@ namespace ExpenseTrackerApp
                         Console.WriteLine("");
 
                         // Print out the new expense
-                        Console.WriteLine("New Expense Added...");
-                        Console.WriteLine($"{expensesList.Last().Description}");
+                        Console.WriteLine("New Expense Added");
+                        Console.WriteLine("-------------------------------");
+                        Console.WriteLine($"Name: {expensesList.Last().Description}");
                         Console.WriteLine($"Amount: {expensesList.Last().Amount:C}");
                         Console.WriteLine($"Category: {expensesList.Last().Category}");
+                        Console.WriteLine("-------------------------------");
                         Console.WriteLine("");
 
                         break;
 
                     // View all expenses
                     case 2:
+                        Console.WriteLine("All Recorded Expenses");
                         PrintExpensesInList(expensesList);
                         break;
 
@@ -110,11 +95,23 @@ namespace ExpenseTrackerApp
 
                         List<Expense> categoryList = expensesList.Where(e => e.Category == categoryInput).ToList(); // Make a new list to hold the returned expenses
 
-                        PrintExpensesInList(categoryList); // Prints the expenses that were returned based on the category
+                        Console.WriteLine("");
+                        PrintExpensesInList(categoryList); // Prints the expenses that were returned based on the 
+                        break;
+
+                    // View total spending
+                    case 4:
+                        decimal totalSpending = expensesList.Sum(e => e.Amount); // Sum up all the expenses
+
+                        // Print the total expenses
+                        Console.WriteLine("-------------------------------");
+                        Console.WriteLine($"Total Expenses: {expensesList.Count}");
+                        Console.WriteLine($"Total Amount:   {totalSpending:C}");
+                        Console.WriteLine("-------------------------------");
+                        Console.WriteLine("");
 
                         break;
-                    case 4:
-                        break;
+
                     case 5:
                         Console.WriteLine("Exiting the program...");
                         return; // Exits the program
