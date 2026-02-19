@@ -34,7 +34,6 @@ namespace ExpenseTrackerApp
         // TODO: Make GetTotalSpending() method
         // TODO: Improve deletion method
         // TODO: Create average expense amount menu option
-        // TODO: Find the highest/lowest expense using LINQ .Max() / .Min()
         // TODO: Group expenses by category and show subtotals
         static void Main(string[] args)
         {
@@ -46,6 +45,7 @@ namespace ExpenseTrackerApp
                 Console.WriteLine("3. View Expenses by Category");
                 Console.WriteLine("4. View Total Spending");
                 Console.WriteLine("5. Delete Expense");
+                Console.WriteLine("6. View Average Expense");
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("");
 
@@ -161,6 +161,24 @@ namespace ExpenseTrackerApp
                         else
                         {   
                             Console.WriteLine("No expenses have been added yet");
+                            Console.WriteLine("");
+                        }
+                        break;
+
+                    // Average Expense
+                    case 6:
+                        if(expensesList.Count > 0)
+                        {
+                            decimal avgExpense = expensesList.Average(e => e.Amount);
+                            Console.WriteLine("-------------------------------");
+                            Console.WriteLine($"Average Expense Amount: {avgExpense:C}");
+                            Console.WriteLine("-------------------------------");
+                            Console.WriteLine("");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No expenses have been added yet");
+                            Console.WriteLine("");
                         }
                         break;
 
