@@ -30,10 +30,26 @@ namespace ExpenseTrackerApp
             Console.WriteLine("");
         }
 
+        public static void GetAverageExpense(List<Expense> expensesList)
+        {
+            if (expensesList.Count > 0)
+            {
+                decimal avgExpense = expensesList.Average(e => e.Amount);
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine($"Average Expense Amount: {avgExpense:C}");
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine("");
+            }
+            else
+            {
+                Console.WriteLine("No expenses have been added yet");
+                Console.WriteLine("");
+            }
+        }
+
         // TODO: Make AddExpense() method
         // TODO: Make GetTotalSpending() method
         // TODO: Improve deletion method
-        // TODO: Create average expense amount menu option
         // TODO: Group expenses by category and show subtotals
         static void Main(string[] args)
         {
@@ -167,19 +183,7 @@ namespace ExpenseTrackerApp
 
                     // Average Expense
                     case 6:
-                        if(expensesList.Count > 0)
-                        {
-                            decimal avgExpense = expensesList.Average(e => e.Amount);
-                            Console.WriteLine("-------------------------------");
-                            Console.WriteLine($"Average Expense Amount: {avgExpense:C}");
-                            Console.WriteLine("-------------------------------");
-                            Console.WriteLine("");
-                        }
-                        else
-                        {
-                            Console.WriteLine("No expenses have been added yet");
-                            Console.WriteLine("");
-                        }
+                        GetAverageExpense(expensesList);
                         break;
 
                     case 0:
