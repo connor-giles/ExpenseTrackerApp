@@ -3,7 +3,7 @@ namespace ExpenseTrackerApp
 {
     class ExpenseTracker
     {
-        public static void PrintExpensesInList(List<Expense> expensesList) 
+        public static void ViewAllExpenses(List<Expense> expensesList) 
         {
             if (expensesList.Count > 0)
             {
@@ -16,6 +16,12 @@ namespace ExpenseTrackerApp
                     Console.WriteLine("-------------------------------");
                     Console.WriteLine("");
                 }
+                decimal maxExpense = expensesList.Max(e => e.Amount);
+                decimal minExpense = expensesList.Min(e => e.Amount);
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine($"Largest Expense: {maxExpense:C}");
+                Console.WriteLine($"Smallest Expense: {minExpense:C}");
+                Console.WriteLine("-------------------------------");
             }
             else
             {
@@ -24,6 +30,12 @@ namespace ExpenseTrackerApp
             Console.WriteLine("");
         }
 
+        // TODO: Make AddExpense() method
+        // TODO: Make GetTotalSpending() method
+        // TODO: Improve deletion method
+        // TODO: Create average expense amount menu option
+        // TODO: Find the highest/lowest expense using LINQ .Max() / .Min()
+        // TODO: Group expenses by category and show subtotals
         static void Main(string[] args)
         {
             List<Expense> expensesList = []; // List to store expenses
@@ -96,7 +108,7 @@ namespace ExpenseTrackerApp
                     // View all expenses
                     case 2:
                         Console.WriteLine("All Recorded Expenses");
-                        PrintExpensesInList(expensesList);
+                        ViewAllExpenses(expensesList);
                         break;
 
                     // View expense by category
@@ -107,7 +119,7 @@ namespace ExpenseTrackerApp
                         List<Expense> categoryList = expensesList.Where(e => e.Category == categoryInput).ToList(); // Make a new list to hold the returned expenses
 
                         Console.WriteLine("");
-                        PrintExpensesInList(categoryList); // Prints the expenses that were returned based on the LINQ
+                        //PrintExpensesInList(categoryList); // Prints the expenses that were returned based on the LINQ
                         break;
 
                     // View total spending
