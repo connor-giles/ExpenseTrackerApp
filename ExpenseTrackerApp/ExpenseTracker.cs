@@ -107,7 +107,7 @@ namespace ExpenseTrackerApp
                         List<Expense> categoryList = expensesList.Where(e => e.Category == categoryInput).ToList(); // Make a new list to hold the returned expenses
 
                         Console.WriteLine("");
-                        PrintExpensesInList(categoryList); // Prints the expenses that were returned based on the 
+                        PrintExpensesInList(categoryList); // Prints the expenses that were returned based on the LINQ
                         break;
 
                     // View total spending
@@ -128,11 +128,26 @@ namespace ExpenseTrackerApp
                         if(expensesList.Count > 0) 
                         {
                             // Prompt user for which expense to delete
+                            Console.WriteLine("Which expense would you like to delete? (must match description)"); // TODO: improve this ability to delete expenses
+                            string expenseToDelete = Console.ReadLine() ?? string.Empty;
+                            
                             // Find that expense in the expensesList (using LINQ)
+                            Expense? toDelete = expensesList.FirstOrDefault(e => e.Description == expenseToDelete);
+
                             // Delete that entry from the list of expenses
+                            if (toDelete != null)
+                            {
+                                expensesList.Remove(toDelete);
+                                Console.WriteLine($"{toDelete.Description} has been deleted");
+                                Console.WriteLine("");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Could not find an expense with that description");
+                            }
                         }
                         else
-                        {
+                        {   
                             Console.WriteLine("No expenses have been added yet");
                         }
                         break;
