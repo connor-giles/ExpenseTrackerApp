@@ -47,8 +47,19 @@ namespace ExpenseTrackerApp
             }
         }
 
+        public static void GetTotalSpending(List<Expense> expensesList)
+        {
+            decimal totalSpending = expensesList.Sum(e => e.Amount); // Sum up all the expenses
+
+            // Print the total expenses
+            Console.WriteLine("-------------------------------");
+            Console.WriteLine($"Total Expenses: {expensesList.Count}");
+            Console.WriteLine($"Total Amount:   {totalSpending:C}");
+            Console.WriteLine("-------------------------------");
+            Console.WriteLine("");
+        }
+
         // TODO: Make AddExpense() method
-        // TODO: Make GetTotalSpending() method
         // TODO: Improve deletion method
         // TODO: Group expenses by category and show subtotals
         static void Main(string[] args)
@@ -140,15 +151,7 @@ namespace ExpenseTrackerApp
 
                     // View total spending
                     case 4:
-                        decimal totalSpending = expensesList.Sum(e => e.Amount); // Sum up all the expenses
-
-                        // Print the total expenses
-                        Console.WriteLine("-------------------------------");
-                        Console.WriteLine($"Total Expenses: {expensesList.Count}");
-                        Console.WriteLine($"Total Amount:   {totalSpending:C}");
-                        Console.WriteLine("-------------------------------");
-                        Console.WriteLine("");
-
+                        GetTotalSpending(expensesList);
                         break;
 
                     // Delete Expense
