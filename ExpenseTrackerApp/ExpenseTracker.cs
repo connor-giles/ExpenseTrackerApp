@@ -26,14 +26,15 @@ namespace ExpenseTrackerApp
 
         static void Main(string[] args)
         {
-            List<Expense> expensesList = new List<Expense>(); // List to store expenses
+            List<Expense> expensesList = []; // List to store expenses
             while (true)
             {
                 Console.WriteLine("1. Add Expense");
                 Console.WriteLine("2. View All Expenses");
                 Console.WriteLine("3. View Expenses by Category");
                 Console.WriteLine("4. View Total Spending");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("5. Delete Expense");
+                Console.WriteLine("0. Exit");
                 Console.WriteLine("");
 
 
@@ -59,12 +60,22 @@ namespace ExpenseTrackerApp
                     case 1:
                         Expense newExpense = new Expense("", 0, "");
 
+                        // New expense description
                         Console.WriteLine("Please input the expense description");
                         newExpense.Description = Console.ReadLine() ?? "No description provided";
 
+                        // Get the expense amount and check for validity, must be positive, and a number
                         Console.WriteLine("Please input expense amount");
-                        newExpense.Amount = Convert.ToDecimal(Console.ReadLine()); // Gets the expense amount from the user and converts it to a decimal
+                        decimal validatedExpense;
+                        while(!decimal.TryParse(Console.ReadLine(), out validatedExpense) || validatedExpense <= 0) // Continues to ask for user input until the value is satisfactory
+                        {
+                            Console.WriteLine("Invalid expense input. Please enter a positive numerical amount (e.g. 12.50)");
+                        }
+                        newExpense.Amount = validatedExpense;
 
+
+                        // New expense category
+                        // TODO: Add function that allows user to input category from a list
                         Console.WriteLine("Please input expense category");
                         newExpense.Category = Console.ReadLine() ?? "No category provided";
 
@@ -112,9 +123,27 @@ namespace ExpenseTrackerApp
 
                         break;
 
+                    // Delete Expense
                     case 5:
+                        if(expensesList.Count > 0) 
+                        {
+                            // Prompt user for which expense to delete
+                            // Find that expense in the expensesList (using LINQ)
+                            // Delete that entry from the list of expenses
+                        }
+                        else
+                        {
+                            Console.WriteLine("No expenses have been added yet");
+                        }
+                        break;
+
+                    case 0:
                         Console.WriteLine("Exiting the program...");
                         return; // Exits the program
+
+                    default:
+                        Console.WriteLine("Invalid Menu Input, Try Again");
+                        break;
                 }
             }
         }
